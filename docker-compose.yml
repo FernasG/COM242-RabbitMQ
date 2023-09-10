@@ -18,10 +18,9 @@ services:
       - "/etc/localtime:/etc/localtime:ro"
     networks:
       - rabbitmq-server-network
-    restart: unless-stopped
+    restart: on-failure
     depends_on:
-      rabbitmq:
-        condition: service_completed_successfully
+      - rabbitmq
   
   rabbitmq:
     container_name: rabbitmq
