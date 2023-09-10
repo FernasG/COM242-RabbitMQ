@@ -6,21 +6,21 @@ networks:
     driver: bridge
 
 services:
-  rabbitmq-server:
-    build: .
-    image: rabbitmq-server:latest
-    container_name: rabbitmq-server
-    environment:
-      - TZ=America/Sao_Paulo
-    volumes:
-      - ${PWD}:/app
-      - "/etc/timezone:/etc/timezone:ro"
-      - "/etc/localtime:/etc/localtime:ro"
-    networks:
-      - rabbitmq-server-network
-    restart: on-failure
-    depends_on:
-      - rabbitmq
+  # rabbitmq-server:
+  #   build: .
+  #   image: rabbitmq-server:latest
+  #   container_name: rabbitmq-server
+  #   environment:
+  #     - TZ=America/Sao_Paulo
+  #   volumes:
+  #     - ${PWD}:/app
+  #     - "/etc/timezone:/etc/timezone:ro"
+  #     - "/etc/localtime:/etc/localtime:ro"
+  #   networks:
+  #     - rabbitmq-server-network
+  #   restart: on-failure
+  #   depends_on:
+  #     - rabbitmq
   
   rabbitmq:
     container_name: rabbitmq
