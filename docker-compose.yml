@@ -1,0 +1,32 @@
+version: "3.9"
+
+networks:
+  rabbitmq-server-network:
+    name: rabbitmq-server-network
+    driver: bridge
+
+services:
+  rabbitmq-server:
+    build: .
+    image: rabbitmq-server:latest
+    container_name: rabbitmq-server
+    environment:
+      - TZ=America/Sao_Paulo
+    volumes:
+      - ${PWD}:/app
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+    networks:
+      - rabbitmq-server-network
+    restart: unless-stopped
+    depends_on:
+      rabbitmq:
+        condition: service_completed_successfully
+  
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq
+    networks:
+      - rabbitmq-server-network
+    ports:
+      - 5672:5672
