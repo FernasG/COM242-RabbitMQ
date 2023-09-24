@@ -1,13 +1,14 @@
-import os, ast, uuid
+import uuid
 
-from pika import BlockingConnection, ConnectionParameters, BasicProperties
+from pika import BlockingConnection, ConnectionParameters, BasicProperties, PlainCredentials
 from pika.adapters.blocking_connection import BlockingChannel
 from pika.spec import Basic
 
 class Client:
     def __init__(self) -> None:
         queues = ["text_message", "file_edit", "calc"]
-        self.connection = BlockingConnection(ConnectionParameters("localhost", "5672"))
+        credentials = PlainCredentials("admin", "123456")
+        self.connection = BlockingConnection(ConnectionParameters("localhost", "5672", credentials=credentials))
         self.channel = self.connection.channel()
 
         for queue in queues:

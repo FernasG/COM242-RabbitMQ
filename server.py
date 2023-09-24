@@ -1,6 +1,6 @@
 import ast
 
-from pika import BlockingConnection, ConnectionParameters, BasicProperties
+from pika import BlockingConnection, ConnectionParameters, BasicProperties, PlainCredentials
 from pika.spec import Basic
 from pika.adapters.blocking_connection import BlockingChannel
 
@@ -36,7 +36,8 @@ def calc(channel: BlockingChannel, method: Basic.Deliver, properties: BasicPrope
 
 if __name__ == "__main__": 
     queues = ["text_message", "file_edit", "calc"]
-    connection = BlockingConnection(ConnectionParameters("localhost", "5672"))
+    credentials = PlainCredentials("admin", "123456")
+    connection = BlockingConnection(ConnectionParameters("localhost", "5672", credentials=credentials))
     channel = connection.channel()
     channel.basic_qos(prefetch_count=1)
 
